@@ -89,7 +89,7 @@ function update() {
     context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
 
     context.fillStyle = "green"
-    context.fillRect(grape.x, grape.y, 200, 200)
+    context.fillRect(grapeDefaultX, grapeDefaultY, 200, 200)
 
     if (isDown) {
         context.fillStyle = "purple";
@@ -156,5 +156,5 @@ function getRandomInt(max) {
   }
 
 function onGrape(event) {
-    return event.clientX > grape.x  && event.clientX < grape.x + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360
+    return event.clientX > grapeDefaultX  && event.clientX < grapeDefaultX + 280 && event.clientY > grapeDefaultY - 50&& event.clientY < grapeDefaultY -50 + 360
 }
