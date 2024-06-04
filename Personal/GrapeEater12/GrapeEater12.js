@@ -138,7 +138,7 @@ function calPos(event) {
     if (isDown) {
         offset = [event.clientX, event.clientY]
 
-        grape.x = offset[0] -200
+        grape.x = offset[0] -250
         grape.y = offset[1]
         if (grape.x > mouth.x && grape.x < mouth.x + mouthWidth && grape.y > mouth.y && grape.y < mouth.y + mouthHeight) {
             open = true;
