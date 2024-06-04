@@ -85,11 +85,11 @@ function update() {
         }
     }
 
-    context.fillStyle = "black"
-    context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
+    //context.fillStyle = "black"
+    //context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
 
-    context.fillStyle = "green"
-    context.fillRect(grapeDefaultX-120, grapeDefaultY-50, 300, 350)
+    //context.fillStyle = "green"
+    //context.fillRect(grapeDefaultX-120, grapeDefaultY-50, 300, 350)
 
     if (isDown) {
         context.fillStyle = "purple";
