@@ -156,7 +156,7 @@ function getRandomInt(max) {
   }
 
 function onGrape(event) {
-    return event.clientX > grapeDefaultX-120  && event.clientX < grapeDefaultX + 300 && event.clientY > grapeDefaultY -50&& event.clientY < grapeDefaultY -50 + 350
+    return event.clientX > grapeDefaultX-120 -250  && event.clientX < grapeDefaultX + 300 -250 && event.clientY > grapeDefaultY -50&& event.clientY < grapeDefaultY -50 + 350
 }
 
 (grapeDefaultX-120, grapeDefaultY-50, 300, 350)
