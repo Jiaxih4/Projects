@@ -105,11 +105,11 @@ function update() {
 }
 
 function setDownTrue(event){
-    if (event.clientX > grape.x  && event.clientX < grape.x + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360){
+    if (onGrape(event)){
         isDown = true;
         offset = [event.clientX, event.clientY]
-        grape.x = offset[0] - 70
-        grape.y = offset[1] - 10
+        grape.x = offset[0]
+        grape.y = offset[1]
     }
 }
 
@@ -138,8 +138,8 @@ function calPos(event) {
     if (isDown) {
         offset = [event.clientX, event.clientY]
 
-        grape.x = offset[0] - 70
-        grape.y = offset[1] - 10
+        grape.x = offset[0]
+        grape.y = offset[1]
         if (grape.x > mouth.x && grape.x < mouth.x + mouthWidth && grape.y > mouth.y && grape.y < mouth.y + mouthHeight) {
             open = true;
         } else {
@@ -151,3 +151,7 @@ function calPos(event) {
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
+
+function onGrape(event) {
+    return event.clientX > grape.x  && event.clientX < grape.x + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360
+}
