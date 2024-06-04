@@ -108,8 +108,8 @@ function setDownTrue(event){
     if (event.clientX > grape.x -110 && event.clientX < grape.x -110 + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360){
         isDown = true;
         offset = [event.clientX, event.clientY]
-        grape.x = offset[0] - 50
-        grape.y = offset[1] - 20
+        grape.x = offset[0] - 70
+        grape.y = offset[1] - 10
     }
 }
 
