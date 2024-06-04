@@ -88,6 +88,9 @@ function update() {
     context.fillStyle = "black"
     context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
 
+    context.fillStyle = "green"
+    context.fillRect(grape.x, grape.y, grape.x + 200, grape.y + 200)
+
     if (isDown) {
         context.fillStyle = "purple";
         context.beginPath();
