@@ -85,8 +85,8 @@ function update() {
         }
     }
 
-    //context.fillStyle = "black"
-    //context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
+    context.fillStyle = "black"
+    context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
 
     if (isDown) {
         context.fillStyle = "purple";
@@ -105,7 +105,7 @@ function update() {
 }
 
 function setDownTrue(event){
-    if (event.clientX > grape.x -110 && event.clientX < grape.x -110 + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360){
+    if (event.clientX > grape.x  && event.clientX < grape.x + 280 && event.clientY > grape.y - 50&& event.clientY < grape.y -50 + 360){
         isDown = true;
         offset = [event.clientX, event.clientY]
         grape.x = offset[0] - 70
