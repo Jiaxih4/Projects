@@ -1,6 +1,6 @@
 let board;
-let boardWidth = window.screen.width - 100
-let boardHeight = window.screen.height -160
+let boardWidth = 1500 - 100
+let boardHeight = 860 -160
 let context;
 
 let mouthWidth = 150;
@@ -85,6 +85,9 @@ function update() {
         }
     }
 
+    //context.fillStyle = "black"
+    //context.fillRect(mouth.x + 20, mouth.y, mouth.width, mouth.height)
+
     if (isDown) {
         context.fillStyle = "purple";
         context.beginPath();
@@ -113,7 +116,7 @@ function setDownTrue(event){
 function setDownFalse() {
     isDown = false;
     open = false;
-    if (grape.x > mouth.x && grape.x < mouth.x + mouthWidth && grape.y > mouth.y && grape.y < mouth.y + mouthHeight) {
+    if (grape.x > mouth.x -30 && grape.x < mouth.x + mouthWidth - 30 && grape.y > mouth.y && grape.y < mouth.y + mouthHeight) {
         let num = getRandomInt(3);
         if (num == 0) {
             let newSound = new Audio('Dzhong grap.mp4');
@@ -135,8 +138,8 @@ function calPos(event) {
     if (isDown) {
         offset = [event.clientX, event.clientY]
 
-        grape.x = offset[0] - 50
-        grape.y = offset[1] - 20
+        grape.x = offset[0] - 70
+        grape.y = offset[1] - 10
         if (grape.x > mouth.x && grape.x < mouth.x + mouthWidth && grape.y > mouth.y && grape.y < mouth.y + mouthHeight) {
             open = true;
         } else {
