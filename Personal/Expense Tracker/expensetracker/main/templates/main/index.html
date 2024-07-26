@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    {% load static %}
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        /* Form styles */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        form button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #display-section {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #display-section h2 {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #display-section .menu {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #display-section .menu th, .menu td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #display-section .menu tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #display-section .menu tr:hover {
+            background-color: #ddd;
+        }
+
+        #display-section .menu th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #display-section button {
+            display: inline-block;
+            margin: 20px 10px 0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #display-section button:hover {
+            background-color: #0056b3;
+        }
+
+        #graph-container {
+            display: flex; /* Use flexbox layout */
+        }
+
+        .graph-wrapper {
+            flex: 1; /* Each graph takes equal space */
+            margin-right: 20px; /* Optional: Adjust margin between graphs */
+        }
+
+        section {
+            padding-top: 20px; 
+            padding-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Expense Tracker</h1>
+    </header>
+    {% if request.user.is_authenticated %}
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">logout</button>
+    </form>
+        {% block content %}
+        <main>
+            <section id="input-section">
+                <h2>Add New Expense</h2>
+                <form method = "post" action = "#">
+                    {% csrf_token %}
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date">
+                    <label for="place">Place:</label>
+                    <input type="text" id="place" name="place">
+                    <label for="purchase">Purchase:</label>
+                    <input type="text" id="purchase" name="purchase">
+                    <label for="cost">Cost:</label>
+                    <input type="number" step="any" id="cost" name="cost">
+                    <label for="type">Type:</label>
+                    <select id="type" name="type">
+                        <option value="food">Food</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description">N/A</textarea>
+                    <button type="submit", name = "Add Expense",  value="Add Expense"> Add Expense </button>
+            </section>
+            <section id="display-section">
+                <h2>Your Expenses</h2>
+                <!-- Expenses will be displayed here -->
+                <table class="menu">
+                    <thead>
+                        <tr>
+                            <th></th> <!-- For checkbox -->
+                            <th>Date</th>
+                            <th>Place</th>
+                            <th>Purchase</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in user.expenses.all %}
+                        <tr>
+                            <td><input type="checkbox" value="clicked" name="c{{item.id}}"></td>
+                            <td>{{item.date}}</td>
+                            <td>{{item.place}}</td>
+                            <td>{{item.purchase}}</td>
+                            <td>${{item.cost}}</td>
+                            <td>{{item.type}}</td>
+                            <td><a href="/{{item.id}}">view</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <button type="submit" name="Delete" value="Delete"> Delete </button>
+                <button type="submit" name="Copy" value="Copy"> Copy </button>
+                <button type="submit" name="Edit" value="Edit"> Edit </button>
+            </section>
+            <section id="graph-section">
+                <h2>Expense Summary</h2>
+                <div id="graph-container">
+                    <div class="graph-wrapper" id="bar_fig_container">
+                        {{ bar|safe }}
+                    </div>
+                    <div class="graph-wrapper" id="pie_fig_container">
+                        {{ pie|safe }}
+                    </div>
+                </div>
+            </section>
+        </main>
+        {% endblock %}
+    {% else %}
+        <p>Login <a href="/login">Here</a></p>
+    {% endif %}
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>
