@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        #content {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="content" name="content">
+        <h1>Edit Expense</h1>
+        <form method="post" action="">
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="{{ obj.date|date:'Y-m-d'}}">
+            
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" value="{{ obj.place }}">
+            
+            <label for="purchase">Purchase:</label>
+            <input type="text" id="purchase" name="purchase" value="{{ obj.purchase }}">
+            
+            <label for="cost">Cost:</label>
+            <input type="number" step="any" id="cost" name="cost" value="{{ obj.cost }}">
+            
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="food" {% if obj.type == 'food' %}selected{% endif %}>Food</option>
+                <option value="transportation" {% if obj.type == 'transportation' %}selected{% endif %}>Transportation</option>
+                <option value="utilities" {% if obj.type == 'utilities' %}selected{% endif %}>Utilities</option>
+                <option value="entertainment" {% if obj.type == 'entertainment' %}selected{% endif %}>Entertainment</option>
+            </select>
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="description">{{ obj.description }}</textarea>
+            <button type="submit" name="Update" value="Update">Update Expense</button>
+        </form>
+    </div>
+</body>
+</html>
